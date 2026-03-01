@@ -1,0 +1,57 @@
+create database testing;
+use testing;
+create table customer(cname varchar(10),age int,gender varchar(20),purchaseditem varchar(20));
+insert into  customer values('john',15,'female','mobile');
+insert into  customer values('don',20,'male','tv');
+insert into  customer values('vk',19,'female','charger');
+delimiter //
+create procedure dispcust()
+begin
+select * from customer;
+end //
+delimiter ;
+
+call dispcust();
+
+delimiter //
+create procedure dispcust1(_cname varchar(20))
+begin
+select * from customer where cname=_cname;
+end //
+delimiter ;
+
+call dispcust1('john'); 
+
+delimiter //
+create procedure insrecord(_cname varchar(10),_age int,_gender varchar(20),_purchaseditem varchar(20))
+begin
+insert into customer values(_cname,_age,_gender,_purchaseditem);
+end //
+delimiter ;
+
+call insrecord('raj',21,'male','lap');
+set sql_safe_updates=0;
+drop procedure updcust;
+delimiter //
+create procedure updcust(_cname varchar(10),_age int)
+begin
+update customer set cname=_cname where age=_age;
+end //
+delimiter ;
+
+call updcust('rajesh',21);
+
+
+
+create table company(cid int,cname varchar(30),address varchar(20),mobile bigint,email varchar(20),pwd varchar(20));
+insert into company values(1,'zoho','chennai',9897676578,'zoho@gmail.com','zoho123');
+select * from company;
+
+delimiter //
+create procedure drp()
+begin
+alter table company  drop column address;
+end //
+delimiter ;
+
+call drp();
